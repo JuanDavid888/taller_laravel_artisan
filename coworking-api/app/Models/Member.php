@@ -23,10 +23,10 @@ class Member extends Model
     ];
 
     public function users() {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsTo(User::class)->withTimestamps();
     }
 
     public function plans() {
-        return $this->belongsToMany(Plan::class)->withTimestamps();
+        return $this->belongsTo(Plan::class)->withTimestamps();
     }
 }

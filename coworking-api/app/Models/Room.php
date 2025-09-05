@@ -24,7 +24,7 @@ class Room extends Model
     ];
 
     public function spaces() {
-        return $this->belongsToMany(Space::class)->withTimestamps();
+        return $this->belongsTo(Space::class)->withTimestamps();
     }
 
     public function amenities() {
