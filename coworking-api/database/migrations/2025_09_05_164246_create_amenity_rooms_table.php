@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('amenity_rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_id')->constrained()->cascadeOnDelete();
-            $table->string('number', 40)->unique();
-            $table->date('issued_date');
-            $table->json('meta')->nullable(); // datos extra: razón social, nit, etc.
+            $table->foreignId('amenity_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('room_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
+            $table->unique(['amenity_id','room_id']);
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('amenity_rooms');
     }
 };

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('amenities', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 80)->unique(); // projector, whiteboard, tv, etc.
             $table->timestamps();
         });
     }

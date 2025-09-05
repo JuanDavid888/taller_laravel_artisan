@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained()->cascadeOnDelete();
-            $table->enum('method',['card','cash','transfer']);
-            $table->decimal('amount', 10, 2);
-            $table->enum('status',['pending','paid','failed'])->default('pending');
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('rooms');
     }
 };

@@ -6,15 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Space extends Model
+class Amenity_room extends Model
 {
-    /** @use HasFactory<\Database\Factories\SpaceFactory> */
+    /** @use HasFactory<\Database\Factories\AmenityRoomFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = "spaces";
+    protected $table = "amenity_room";
 
-    protected $fillable = [
-        'name',
-        'address'
-    ];
+    protected $fillable = ['amenity_id', 'room_id'];
 }

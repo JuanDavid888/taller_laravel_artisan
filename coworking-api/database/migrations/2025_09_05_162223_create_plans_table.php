@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spaces', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 120);
-            $table->string('address')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spaces');
+        Schema::dropIfExists('plans');
     }
 };

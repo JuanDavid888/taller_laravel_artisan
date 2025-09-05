@@ -4,9 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Payment;
 
 class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $table = "invoices";
+
+    protected $fillable = [
+        'payment_id',
+        'number',
+        'ussued_date',
+        'meta'
+    ];
+
+    protected $casts = [
+        'meta' => 'array'
+    ];
+
+    public function payments() {
+        return $this->belongsToMany(Payment::class)->withTimestamps();
+    }
 }
