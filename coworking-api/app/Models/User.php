@@ -48,6 +48,6 @@ class User extends Authenticatable
     }
 
     public function members() {
-        return $this->belongsTo(Member::class);
+        return $this->hasMany(Member::class);
     }
 }

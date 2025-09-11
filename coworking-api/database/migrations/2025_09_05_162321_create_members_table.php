@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('plan_id')->constrained()->cascadeOnDelete();
+            $table->string('company')->nullable();
+            $table->date('joined_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

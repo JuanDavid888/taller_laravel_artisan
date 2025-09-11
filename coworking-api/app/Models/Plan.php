@@ -21,7 +21,13 @@ class Plan extends Model
         'price'
     ];
 
-    public function members() {
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+    public function members()
+    {
         return $this->hasMany(Member::class);
     }
 }

@@ -18,8 +18,14 @@ class Space extends Model
         'name',
         'address'
     ];
-    
-    public function rooms() {
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+    public function rooms()
+    {
         return $this->hasMany(Room::class);
     }
 }

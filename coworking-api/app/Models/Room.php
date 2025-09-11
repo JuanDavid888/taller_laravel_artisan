@@ -24,15 +24,23 @@ class Room extends Model
         'is_active'
     ];
 
-    public function spaces() {
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+    public function spaces()
+    {
         return $this->belongsTo(Space::class);
     }
 
-    public function amenities() {
+    public function amenities()
+    {
         return $this->belongsToMany(Amenity::class)->using(AmenityRoom::class)->withTimestamps();
     }
 
-    public function bookings() {
+    public function bookings()
+    {
         return $this->belongsTo(Booking::class);
     }
 }

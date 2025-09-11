@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('member_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('room_id')->constrained()->cascadeOnDelete();
+            $table->dateTime('start_at');
+            $table->dateTime('end_at');
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->string('purpose')->nullable();
             $table->timestamps();
+
+            $table->index(['room_id', 'start_at', 'end_at']);
+            $table->softDeletes();
         });
     }
 

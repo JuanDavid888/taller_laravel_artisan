@@ -22,11 +22,18 @@ class Payment extends Model
         'status'
     ];
 
-    public function bookings() {
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+    public function bookings()
+    {
         return $this->hasMany(Booking::class);
     }
 
-    public function invoices() {
+    public function invoices()
+    {
         return $this->belongsTo(Invoice::class);
     }
 }

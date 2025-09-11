@@ -25,15 +25,23 @@ class Booking extends Model
         'purpose'
     ];
 
-    public function members() {
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+    public function members()
+    {
         return $this->belongsTo(Member::class);
     }
 
-    public function rooms() {
-        return $this->hasMany(Room::class);
+    public function rooms()
+    {
+        return $this->belongsTo(Room::class);
     }
 
-    public function payments() {
-        return $this->belongsTo(Payment::class);
+    public function payments()
+    {
+        return $this->hasOne(Payment::class);
     }
 }

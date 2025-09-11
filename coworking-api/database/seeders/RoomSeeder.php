@@ -10,22 +10,26 @@ class RoomSeeder extends Seeder
 {
     public function run(): void
     {
-        // Obtener todos los spaces existentes (o crear algunos si no hay)
+        // Obtener todos los spaces existentes
         $spaces = Space::all();
 
-        // Si no hay spaces, crea algunos (por ejemplo 5)
         if ($spaces->isEmpty()) {
-            $spaces = Space::factory()->count(5)->create();
+            $this->command->warn('No se encontraron spaces. Se omite la creación de rooms.');
+            return;
         }
 
-        // Crear 5 rooms
-        Room::factory()
-            ->count(5)
-            ->create()
-            ->each(function ($room) use ($spaces) {
-                // Asignar un space_id aleatorio a cada room
-                $room->space_id = $spaces->random()->id;
-                $room->save();
-            });
+        // Para cada espacio, crear entre 3 y 5 habitaciones
+        $spaces->each(function ($space) {
+            $roomsCount = rand(3, 5);
+            Room::factory()
+                ->count($roomsCount)
+                ->create([
+                    'space_id' => $space->id,
+                ]);
+
+            $this->command->info("Se crearon" . $roomsCount . "rooms para el space con ID" . $space->id);
+        });
+
+        $this->command->info('Se han creado todas las rooms asociadas a sus spaces correctamente.');
     }
 }

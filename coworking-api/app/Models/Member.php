@@ -23,15 +23,23 @@ class Member extends Model
         'joined_at'
     ];
 
-    public function users() {
-        return $this->hasMany(User::class);
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function plans() {
+    public function plans()
+    {
         return $this->belongsTo(Plan::class);
     }
 
-    public function bookings() {
+    public function bookings()
+    {
         return $this->hasMany(Booking::class);
     }
 }

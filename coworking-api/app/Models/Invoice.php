@@ -22,10 +22,13 @@ class Invoice extends Model
     ];
 
     protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime',
         'meta' => 'array'
     ];
 
-    public function payments() {
+    public function payments()
+    {
         return $this->hasMany(Payment::class);
     }
 }

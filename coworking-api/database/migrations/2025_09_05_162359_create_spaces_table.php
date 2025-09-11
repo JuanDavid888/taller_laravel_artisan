@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('spaces', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 120);
+            $table->string('address')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

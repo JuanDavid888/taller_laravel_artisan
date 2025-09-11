@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 80)->unique();
+            $table->unsignedInteger('monthly_hours');
+            $table->unsignedInteger('guest_passes')->default(0);
+            $table->decimal('price', 10, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('space_id')->constrained()->cascadeOnDelete();
+            $table->string('name', 120);
+            $table->unsignedInteger('capacity');
+            $table->enum('type', ['meeting', 'workshop', 'phonebooth', 'auditorium']);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
