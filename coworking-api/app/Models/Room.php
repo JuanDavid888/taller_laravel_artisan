@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Space;
-use App\Models\Amenity_room;
+use App\Models\AmenityRoom;
 use App\Models\Booking;
 
 class Room extends Model
@@ -29,7 +29,7 @@ class Room extends Model
     }
 
     public function amenities() {
-        return $this->belongsToMany(Amenity::class)->using(Amenity_room::class)->withTimestamps();
+        return $this->belongsToMany(Amenity::class)->using(AmenityRoom::class)->withTimestamps();
     }
 
     public function bookings() {

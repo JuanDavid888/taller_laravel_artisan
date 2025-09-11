@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Amenity_room;
+use App\Models\AmenityRoom;
 
 class Amenity extends Model
 {
@@ -17,6 +17,6 @@ class Amenity extends Model
     protected $fillable = ['name'];
 
     public function rooms() {
-        return $this->belongsToMany(Room::class)->using(Amenity_room::class)->withTimestamps();
+        return $this->belongsToMany(Room::class)->using(AmenityRoom::class)->withTimestamps();
     }
 }
