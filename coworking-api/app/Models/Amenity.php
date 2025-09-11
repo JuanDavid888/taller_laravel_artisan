@@ -16,7 +16,7 @@ class Amenity extends Model
 
     protected $fillable = ['name'];
 
-    public function spaces() {
+    public function rooms() {
         return $this->belongsToMany(Room::class)->using(Amenity_room::class)->withTimestamps();
     }
 }

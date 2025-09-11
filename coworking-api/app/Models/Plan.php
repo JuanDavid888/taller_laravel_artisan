@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Member;
 
 class Plan extends Model
 {
@@ -19,4 +20,8 @@ class Plan extends Model
         'guest_passes',
         'price'
     ];
+
+    public function members() {
+        return $this->hasMany(Member::class);
+    }
 }

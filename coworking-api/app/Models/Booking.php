@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Member;
 use App\Models\Room;
+use App\Models\Payment;
 
 class Booking extends Model
 {
@@ -25,10 +26,14 @@ class Booking extends Model
     ];
 
     public function members() {
-        return $this->belongsToMany(Member::class)->withTimestamps();
+        return $this->belongsTo(Member::class);
     }
 
     public function rooms() {
-        return $this->belongsToMany(Room::class)->withTimestamps();
+        return $this->hasMany(Room::class);
+    }
+
+    public function payments() {
+        return $this->belongsTo(Payment::class);
     }
 }

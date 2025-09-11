@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Amenity_room extends Model
+class Amenity_room extends Pivot
 {
-    /** @use HasFactory<\Database\Factories\AmenityRoomFactory> */
-    use HasFactory, SoftDeletes;
-
     protected $table = "amenity_room";
 
-    protected $fillable = ['amenity_id', 'room_id'];
+    protected $fillable = [
+        'amenity_id',
+        'room_id'
+    ];
 }

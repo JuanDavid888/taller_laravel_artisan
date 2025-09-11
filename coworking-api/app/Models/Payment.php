@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Booking;
+use App\Models\Invoice;
 
 class Payment extends Model
 {
@@ -22,6 +23,10 @@ class Payment extends Model
     ];
 
     public function bookings() {
-        return $this->belongsToMany(Booking::class)->withTimestamps();
+        return $this->hasMany(Booking::class);
+    }
+
+    public function invoices() {
+        return $this->belongsTo(Invoice::class);
     }
 }

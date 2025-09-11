@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\Plan;
+use App\Models\Booking;
 
 class Member extends Model
 {
@@ -23,10 +24,14 @@ class Member extends Model
     ];
 
     public function users() {
-        return $this->belongsTo(User::class)->withTimestamps();
+        return $this->hasMany(User::class);
     }
 
     public function plans() {
-        return $this->belongsTo(Plan::class)->withTimestamps();
+        return $this->belongsTo(Plan::class);
+    }
+
+    public function bookings() {
+        return $this->hasMany(Booking::class);
     }
 }
