@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateRoomRequest;
 use App\Http\Resources\RoomResource;
 use App\Traits\ApiResponse;
 use App\Models\Room;
+use App\Models\Amenity;
 use Illuminate\Http\JsonResponse;
 
 class RoomController extends Controller
@@ -41,6 +42,28 @@ class RoomController extends Controller
         }
         
         return $this->error("Room not found", 404, ['id' => 'No resource found with the given id']);
+    }
+
+    public function attachAmenity(Room $room, Amenity $amenity)
+    {
+        // Evita duplicados usando syncWithoutDetaching
+        $room->amenities()->syncWithoutDetaching([$amenity->id]);
+
+        return $this->success(
+            message: 'Amenity attached successfully.',
+            data: ['room_id' => $room->id, 'amenity_id' => $amenity->id]
+        );
+    }
+
+    public function detachAmenity(Room $room, Amenity $amenity)
+    {
+        // Elimina la relación si existe
+        $room->amenities()->detach($amenity->id);
+
+        return $this->success(
+            message: 'Amenity detached successfully.',
+            data: ['room_id' => $room->id, 'amenity_id' => $amenity->id]
+        );
     }
 
     /**

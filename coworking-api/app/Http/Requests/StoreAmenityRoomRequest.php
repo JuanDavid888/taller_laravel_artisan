@@ -11,7 +11,7 @@ class StoreAmenityRoomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreAmenityRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amenity_id'  => ['required','exists:spaces,id'],
+            'room_id'  => ['required','exists:spaces,id']
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAmenityRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
-use App\Http\Resources\AmenityRoomResource;
+use App\Http\Resources\RoomResource;
 use App\Traits\ApiResponse;
 use App\Models\AmenityRoom;
 use Illuminate\Http\JsonResponse;
@@ -17,9 +17,7 @@ class AmenityRoomController extends Controller
      */
     public function index()
     {
-        $amenity_room = AmenityRoom::with('spaces')->get();
-        //use App\Http\Resources\PostResource
-        return $this->success(AmenityRoomResource::collection($amenity_room));
+        //
     }
 
     /**
@@ -33,7 +31,7 @@ class AmenityRoomController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAmenityRoomRequest $request)
+    public function store(StoreAmenity_roomRequest $request)
     {
         //
     }
