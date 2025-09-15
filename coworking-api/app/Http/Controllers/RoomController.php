@@ -9,6 +9,7 @@ use App\Traits\ApiResponse;
 use App\Models\Room;
 use App\Models\Amenity;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
@@ -16,11 +17,23 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::with('spaces')->get();
-        //use App\Http\Resources\PostResource
-        return $this->success(RoomResource::collection($rooms));
+        $spaceId = $request->query('space_id');
+    
+        $query = Room::with('spaces');
+    
+        if ($spaceId) {
+            $query->where('space_id', $spaceId);
+        }
+    
+        $rooms = $query->get();
+    
+        if ($spaceId && $rooms->isEmpty()) {
+            return $this->error("No rooms found for the given space_id", 404, ['space_id' => 'No rooms found']);
+        }
+    
+        return $this->success(RoomResource::collection($rooms), "Rooms retrieved successfully");
     }
 
     /**
