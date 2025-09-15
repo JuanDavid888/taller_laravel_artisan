@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoomRequest extends FormRequest
+class StoreSpaceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,13 +19,11 @@ class StoreRoomRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array {
+    public function rules(): array
+    {
         return [
-          'space_id'  => ['required','exists:spaces,id'],
-          'name'      => ['required','string','min:3','max:120','unique:rooms,name'],
-          'capacity'  => ['required','integer','min:1','max:200'],
-          'type'      => ['required','in:meeting,workshop,phonebooth,auditorium'],
-          'is_active' => ['boolean'],
-        ];
-      }
+            'name'      => ['required','string','min:3','max:120','unique:spaces,name'],
+            'address'   => ['required', 'string', 'min:5', 'max:255'],
+          ];
+    }
 }

@@ -23,14 +23,6 @@ class RoomController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreRoomRequest $request) {
@@ -43,13 +35,12 @@ class RoomController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        $result = Room::find($id);
-        if($result) {
-            $result->load(['spaces']);
-            return $this->success(new RoomResource($result), "Todo bem, prosigue");
-        } else {
-            return $this->error("Todo mal, asi no", 404, ['id' => 'No se encontro el recurso con el id']);
+        $room = Room::with('spaces')->find($id);
+        if ($room) {
+            return $this->success(new RoomResource($room), "Room found successfully");
         }
+        
+        return $this->error("Room not found", 404, ['id' => 'No resource found with the given id']);
     }
 
     /**

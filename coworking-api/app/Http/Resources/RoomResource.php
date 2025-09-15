@@ -21,12 +21,10 @@ class RoomResource extends JsonResource
             'type' => $this->type,
             'is_active' => $this->is_active,
             'spaces' => $this->whenLoaded('spaces', function () {
-                return $this->spaces->map(function ($space) {
-                    return [
-                        'id' => $space->id,
-                        'name' => $space->name
-                    ];
-                });
+                return [
+                    'id' => $this->spaces->id,
+                    'name' => $this->spaces->name
+                ];
             }),
         ];
     }

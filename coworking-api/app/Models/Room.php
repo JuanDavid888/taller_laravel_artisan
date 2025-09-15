@@ -31,7 +31,7 @@ class Room extends Model
 
     public function spaces()
     {
-        return $this->belongsTo(Space::class);
+        return $this->belongsTo(Space::class, 'space_id');
     }
 
     public function amenities()
