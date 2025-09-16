@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookingRequest;
 use App\Http\Requests\UpdateBookingRequest;
+use App\Http\Resources\BookingResource;
 use App\Traits\ApiResponse;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Log;
@@ -51,7 +52,7 @@ class BookingController extends Controller
         $booking->update($data);
 
         // Carga relaciones necesarias y devuelve la respuesta
-        $booking->load(['members', 'rooms']);
+        $booking->load(['members', 'room']);
         return $this->success(new UpdateBookingRequest());
     }
 
