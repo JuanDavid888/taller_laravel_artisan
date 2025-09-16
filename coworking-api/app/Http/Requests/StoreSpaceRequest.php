@@ -24,6 +24,6 @@ class StoreSpaceRequest extends FormRequest
         return [
             'name'      => ['required','string','min:3','max:120','unique:spaces,name'],
             'address'   => ['required', 'string', 'min:5', 'max:255'],
-          ];
+        ];
     }
 }

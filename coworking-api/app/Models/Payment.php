@@ -27,9 +27,9 @@ class Payment extends Model
         'deleted_at' => 'datetime'
     ];
 
-    public function bookings()
+    public function booking()
     {
-        return $this->hasMany(Booking::class);
+        return $this->belongsTo(Booking::class);
     }
 
     public function invoices()
