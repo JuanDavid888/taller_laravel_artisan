@@ -27,7 +27,7 @@ class Payment extends Model
         'deleted_at' => 'datetime'
     ];
 
-    public function booking()
+    public function bookings()
     {
         return $this->belongsTo(Booking::class);
     }

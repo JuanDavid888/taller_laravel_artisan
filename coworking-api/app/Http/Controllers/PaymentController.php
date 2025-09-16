@@ -31,7 +31,7 @@ class PaymentController extends Controller
         $payment = Payment::create($data);
 
         // Cargar relaciones si las necesitas en el recurso
-        $payment->load('booking');
+        $payment->load('bookings');
 
         return $this->success(
             new PaymentResource($payment),

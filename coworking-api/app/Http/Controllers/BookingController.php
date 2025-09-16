@@ -44,10 +44,6 @@ class BookingController extends Controller
      */
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
-        // Registra la solicitud y archivos para depuración
-        Log::debug('all:', $request->all());
-        Log::debug('files:', array_keys($request->allFiles()));
-
         // Obtiene los datos validados
         $data = $request->validated();
 
@@ -55,7 +51,7 @@ class BookingController extends Controller
         $booking->update($data);
 
         // Carga relaciones necesarias y devuelve la respuesta
-        $booking->load(['user', 'categories']);
+        $booking->load(['members', 'rooms']);
         return $this->success(new UpdateBookingRequest());
     }
 
