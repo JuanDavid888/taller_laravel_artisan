@@ -38,4 +38,17 @@ Route::prefix('')->group(function () {
     // Relación amenities<->rooms (atach/detach) como endpoints específicos:
     Route::post('rooms/{room}/amenities/{amenity}', [RoomController::class,'attachAmenity']);
     Route::delete('rooms/{room}/amenities/{amenity}', [RoomController::class,'detachAmenity']);
+    
+    // Metodo de restauracion y eliminacion (Rooms)
+    Route::prefix('rooms')->group(function () {
+        Route::post('{id}/restore', [RoomController::class, 'restore']);
+        Route::delete('{id}/force-delete', [RoomController::class, 'forceDelete']);
+    });
+    
+    // Metodo de restauracion y eliminacion (Bookings)
+    Route::prefix('bookings')->group(function () {
+        Route::post('{id}/restore', [BookingController::class, 'restore']);
+        Route::delete('{id}/force-delete', [BookingController::class, 'forceDelete']);
+    });
+    
 });
