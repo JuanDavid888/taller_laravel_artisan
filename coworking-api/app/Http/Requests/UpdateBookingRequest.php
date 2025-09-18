@@ -21,13 +21,14 @@ class UpdateBookingRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array {
+    public function rules(): array
+    {
         $routeBooking = $this->route('booking');
-        $bookingId = $routeBooking instanceof Booking ? $routeBooking->id : null; 
+        $bookingId = $routeBooking instanceof Booking ? $routeBooking->id : null;
     
         return [
-            'member_id' => ['required','exists:members,id'],
-            'room_id'   => ['required','exists:rooms,id'],
+            'member_id' => ['nullable', 'exists:members,id'],
+            'room_id'   => ['nullable', 'exists:rooms,id'],
     
             'start_at' => [
                 'required',
@@ -36,16 +37,14 @@ class UpdateBookingRequest extends FormRequest
                 new NoOverlapRule(),  // Regla para evitar solapamientos
             ],
     
-            'end_at'    => ['required','date','after:start_at'],
+            'end_at' => [
+                'required',
+                'date',
+                'after:start_at',
+            ],
+            
+            'status' => ['nullable', 'in:pending,confirmed,cancelled'],
+            'purpose' => ['nullable', 'string'],
         ];
-    }
-    
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            // Agregar el ID de la reserva a las reglas de validación
-            $validator->addRules(['booking_id' => 'required|integer']);
-            $this->merge(['booking_id' => $this->route('booking')->id]);  // Asigna el ID de la reserva
-        });
     }
 }

@@ -19,21 +19,35 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $spaceId = $request->query('space_id');
-    
         $query = Room::with('spaces');
-    
+
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->query('name') . '%');
+        }
+        if ($request->has('type')) {
+            $query->where('type', 'like', '%' . $request->query('type') . '%');
+        }
+        if ($request->has('capacity')) {
+            $query->where('capacity', $request->query('capacity'));
+        }
+
+        $spaceId = $request->query('space_id');
+        $perPage = $request->query('per_page', 10); // Número de resultados por página, por defecto 10
+
         if ($spaceId) {
             $query->where('space_id', $spaceId);
         }
-    
-        $rooms = $query->get();
-    
-        if ($spaceId && $rooms->isEmpty()) {
-            return $this->error("No rooms found for the given space_id", 404, ['space_id' => 'No rooms found']);
+
+        $rooms = $query->paginate($perPage);
+
+        // Verificar si no hay resultados
+        if ($rooms->isEmpty()) {
+            return response()->json([
+                'message' => 'No hay elementos que coincidan con los filtros proporcionados.',
+            ], 404);
         }
     
-        return $this->success(RoomResource::collection($rooms), "Rooms retrieved successfully");
+        return $this->success(RoomResource::collection($rooms));
     }
     
 

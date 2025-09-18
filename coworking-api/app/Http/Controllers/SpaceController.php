@@ -9,6 +9,7 @@ use App\Models\Room;
 use App\Traits\ApiResponse;
 use App\Models\Space;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class SpaceController extends Controller
 {
@@ -16,9 +17,22 @@ class SpaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $spaces = Space::all(); 
+        $query = Space::query();
+
+        // filtros dinámicos
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->query('name') . '%');
+        }
+        if ($request->has('address')) {
+            $query->where('address', 'like', '%' . $request->query('address') . '%');
+        }
+
+        // paginación (default 10)
+        $perPage = $request->query('per_page', 10);
+        $spaces = $query->paginate($perPage);
+
         return $this->success(SpaceResource::collection($spaces));
     }
 

@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class BookingController extends Controller
 {
     use ApiResponse;
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -34,13 +37,18 @@ class BookingController extends Controller
         }
     
         // paginación (default 10)
-        $perPage = $request->query('per_page', 10);
+        $perPage = $request->query('per_page', 15);
         $bookings = $query->paginate($perPage);
-    
-        return $this->success($bookings, "Bookings retrieved successfully");
-    }
 
+        // Verificar si no hay resultados
+        if ($bookings->isEmpty()) {
+            return response()->json([
+                'message' => 'No hay elementos que coincidan con los filtros proporcionados.',
+            ], 404);
+        }
     
+        return $this->success(BookingResource::collection($bookings));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -70,11 +78,15 @@ class BookingController extends Controller
         // Actualiza la reserva con los nuevos datos
         $booking->update($data);
 
-        // Carga relaciones necesarias y devuelve la respuesta
+        // Carga relaciones necesarias
         $booking->load(['members', 'room']);
-        return $this->success(new UpdateBookingRequest());
-    }
 
+        // Retorna una respuesta exitosa con los datos actualizados
+        return response()->json([
+            'message' => 'Reserva actualizada con éxito.',
+            'booking' => $booking,
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.
